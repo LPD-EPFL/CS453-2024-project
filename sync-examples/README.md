@@ -1,8 +1,8 @@
 # Simple synchronization examples.
 
 Modifying a variable that is concurrently accessed by another thread is
-dangerous and will (most of the time) lead to Undefined Behaviors and Data
-Races.
+dangerous and will (most of the time) lead to Data Races and Undefined
+Behaviors.
 
 Through simple examples, we'll see how to use synchronization primitives to
 build thread-safe programs using locks and atomic variables.
@@ -16,10 +16,9 @@ that exactly one thread considers itself as the leader in each run.
 second tries to consume it. They have to be kept in sync.
 
 These examples also show how to start threads and wait for their completion.
-YOU DON'T HAVE TO START THREADS YOURSELVES IN THE DUAL-VERSIONED STM ALGO.
-In the STM, threads are started by the users of your library (in which they
-repeatedly (1) start a transaction, (2) read/write/alloc/free STM memory and (3)
-commit the transaction.).
+This is not needed in the dual-versioned STM algorithm, as threads are started
+by the users of your library (in which they repeatedly (1) start a transaction,
+(2) read/write/alloc/free STM memory and (3) commit the transaction).
 
 ## Counter
 
@@ -61,12 +60,12 @@ We take a big nice lock when when writting/reading and checking the bounds:
 correct.
 
 ### Okayish approach #2
-We use atomic variables and fences: correct.
+We use atomic variables and fences: correct (but inefficient).
 
 ### Good approach
-We use a conditional variable. :)
-https://www.ibm.com/docs/en/i/7.1?topic=ssw_ibm_i_71/apis/users_78.htm
-Conditional variables are synchronization primitives provided by the kernel
+We use a [https://www.ibm.com/docs/en/i/7.1?topic=ssw_ibm_i_71/apis/users_78.htm](condition variable). :)
+
+Condition variables are synchronization primitives provided by the kernel
 that let a thread sleep until it's woken up. Using a "cond var", a consummer
 that realizes that data has not been generated yet can go to sleep instead of
 busy waiting. It will then be woken up by the producer once the data is

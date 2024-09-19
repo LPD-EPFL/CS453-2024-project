@@ -46,7 +46,7 @@ void* produce(void* null) {
     buffer[r % BUFFER_SIZE] = produced[r];
     produced_until++;
     lock_release(&lock);
-    // Correct: we wait until nobody consumed data anymore and correctly release
+    // Correct: we wait until nobody consumes data anymore and correctly release
     // (prevent reordering) thanks to the lock.
   }
 }
