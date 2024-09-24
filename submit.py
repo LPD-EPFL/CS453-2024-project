@@ -44,7 +44,7 @@ import socket
 version_uid = b"\x00\x00\x00\x02" # Unique version identifier (must be identical in compatible server)
 
 default_host = "lpdxeon2680.epfl.ch" # Default server hostname or IPv4
-default_port = 9997                  # Default server TCP port
+default_port = 8888                  # Default server TCP port
 
 max_codesize = 100000 # Max code size (in bytes) before AND after deflate (the same as in the server); modifying this value won't change the behavior of the server ;)
 
