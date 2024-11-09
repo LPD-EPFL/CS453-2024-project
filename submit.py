@@ -206,6 +206,9 @@ if args.force_update or not args.download:
   if not zip_path.exists():
     print("File %r cannot be accessed" % str(zip_path))
     exit(1)
+  if zip_path.stat().st_size > max_codesize:
+    print("Submission larger than %d bytes" % max_codesize)
+    exit(1)
   socket_sendfield(client_fd, zip_path.read_bytes())
 if args.download:
   # Receive zip file
